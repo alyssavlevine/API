@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <style>
+    	html,body{
+    		background-color: cornflowerblue;
+    	}
+
+    	h1{
+    		color: white;
+    		text-align: center;
+    	}
+    	h2{
+    		text-align: center;
+    	}
+
+    	.text {
+      		margin-left: 250px;
+      		margin-right: 250px;
+      		font-size: 20px;
+    	}
+
+
+    	button{
+	      cursor: pointer;
+	      border-color: green;
+	      color: black;
+	      font-weight: normal;
+	      width: 10%;
+	      margin-left: 645px;
+      	
+    	}
+
+    	.cities{
+		  width: 100%;
+      	  font-size: 30px;
+          text-align: center;
+    	}
+
+    </style>
+
+
+
+
+
+    <title>Weather API</title>
+<!--     <link rel="stylesheet" href="./styleref.css"> -->
+    <script>
+ 	function getWeather() {
+ 	city = document.getElementById("city").value;
+    request = new XMLHttpRequest(); 
+  	request.open("GET", 
+                         "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=fa4bedec724bbc2dff5235fa0562d20a",
+                         true);
+
+     request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 200) {
+        data = request.responseText;
+        data = JSON.parse(data);
+        var icon =  "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+		var temp = ((data.main.temp - 273.15) * 9/5 +32).toFixed(0);
+		
+		var weather = data.weather[0].main;
+        document.getElementById("results").innerHTML = "Current Weather in " + city + " is: " + weather + "<br>";
+   
+
+        document.getElementById("results").innerHTML += "Current temperature in " + city + " is: " + temp + "<br>";    
+    }
+       else if (request.readyState == 4 && request.status != 200) {
+                    alert("Enter a valid city name");
+        }
+      }
+      request.send();
+    
+}
+
+  
+    </script>
+    
+</head>
+<body>
+    <h1>Search for a City's Weather </h1>
+    <main>
+        <div class="container">
+            <div class="cities">
+                <input type="text" name="city" id="city" placeholder="Please enter a city">
+            </div>
+            <div class="button">
+                <button type="submit" onclick="getWeather()">
+                    Get Current Weather
+                </button>
+            </div>
+            <div class="resultss">
+                <p id="results"></p>
+            </div>
+  
+        </div>
+    </main>
+      <h2>Describe the API you selected and what it does</h2>
+    <p class = "text">
+      I used an API that finds the weather of a certain city. I am only using the weather and temperature because those are 
+   the two most looked at items when searching for the weather of a certain city!</p><br>
+    <h2>Cite the website where you found it</h2>
+    <p class = "text">
+      API website: <a href="https://openweathermap.org/">openweathermap</a>
+    </p>
+    <h2>Describe the options you used for the API request</h2>
+    <p class = "text">
+      I used the temperature and weather elements from the API request.  
+    </p>
+    <h2>Give two applications where this API would be helpful</h2>
+    <p class = "text">
+      1. Basic weather information to be used in different websites <br>
+      2. Could be used for gps. For example: weather conditions are bad because it's raining - leave 20 min earlier!
+    </p>
+  </center>
+  <br>
+  <br>
+
+
+
+</body>
+</html>
